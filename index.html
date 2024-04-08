@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="description"
+        content="A metamorphic video generation pipeline based on the given prompts.">
+  <meta name="keywords" content="Text-to-Video Generation, Diffusion Model, Time-lapse">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MagicTime: Time-lapse Video Generation Models as Metamorphic Simulators</title>
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-PYVRSFMDRL"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+
+    gtag('config', 'G-PYVRSFMDRL');
+  </script>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+        rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <link rel="icon" href="./static/images/favicon.svg">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+</head>
+<body>
+
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-1 publication-title">MagicTime: Time-lapse Video Generation Models as Metamorphic Simulators</h1>
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">
+              <a href="https://github.com/PKU-YuanGroup/MagicTime">Shenghai Yuan</a><sup>1</sup>,</span>
+            <span class="author-block">
+              <a href="https://infaaa.github.io/">Jinfa Huang</a><sup>2</sup>,</span>
+            <span class="author-block">
+              <a href="https://yujun-shi.github.io/">Yujun Shi</a><sup>3</sup>,</span>
+            <span class="author-block">
+              <a href="https://github.com/PKU-YuanGroup/MagicTime">Yongqi Xu</a><sup>4</sup>,</span>
+            <span class="author-block">
+              <a href="https://github.com/PKU-YuanGroup/MagicTime">Ruijie Zhu</a><sup>5</sup>,</span>
+            <span class="author-block">
+                <a href="https://twitter.com/LinBin46984">Bin Lin</a><sup>1</sup>,</span>
+            <span class="author-block">
+              <a href="https://cxh0519.github.io/">Xinhua Cheng</a><sup>1</sup>,</span>
+            <span class="author-block">
+              <a href="https://yuanli2333.github.io/">Li Yuan</a><sup>1</sup>,</span>
+            <span class="author-block">
+              <a href="https://www.cs.rochester.edu/u/jluo/">Jiebo Luo</a><sup>2</sup>,</span>
+          </div>
+
+          <div class="is-size-5 publication-authors">
+            <span class="author-block"><sup>1</sup>Peking University,</span>
+            <span class="author-block"><sup>2</sup>University of Rochester,</span>
+            <span class="author-block"><sup>3</sup>National University of Singapore,</span>
+            <span class="author-block"><sup>4</sup>Guangdong University of Technology,</span>
+            <span class="author-block"><sup>5</sup>University of California</span>
+          </div>
+
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <!-- PDF Link. -->
+              <span class="link-block">
+                <a href="https://github.com/PKU-YuanGroup/MagicTime/tree/main"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fas fa-file-pdf"></i>
+                  </span>
+                  <span>Paper</span>
+                </a>
+              </span>
+              <span class="link-block">
+                <a href="https://github.com/PKU-YuanGroup/MagicTime/tree/main"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="ai ai-arxiv"></i>
+                  </span>
+                  <span>arXiv</span>
+                </a>
+              </span>
+              <!-- Code Link. -->
+              <span class="link-block">
+                <a href="https://github.com/PKU-YuanGroup/MagicTime/tree/main"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-github"></i>
+                  </span>
+                  <span>Code</span>
+                  </a>
+              </span>
+              <!-- Dataset Link. -->
+              <span class="link-block">
+                <a href="https://github.com/PKU-YuanGroup/MagicTime/tree/main"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="far fa-images"></i>
+                  </span>
+                  <span>Data</span>
+                  </a>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="hero teaser">
+  <div class="container is-max-desktop">
+    <div class="hero-body">
+      <h2 class="subtitle has-text-centered">
+        <span class="dnerf">MagicTime</span> can generate high-quality metamorphic videos!
+      </h2>
+    </div>
+  </div>
+</section>
+
+<style>
+  .image-container img {
+    width: 140px; /* Fixed width for all images */
+    height: 140px; /* Fixed height for all images */
+    object-fit: cover; /* Ensures the image covers the box, may clip some parts */
+  }
+  .text-cell {
+    width: 140px; /* Allows the text cell to adjust based on content */
+    text-align: center;
+  }
+  .square-image {
+    width: 200px; /* Set both width and height to the same value */
+    height: 230px;
+    object-fit: cover; /* This will make sure the images cover the square area without distorting their aspect ratios */
+  }
+  table {
+    border-collapse: collapse; /* Removes the space between borders */
+  }
+  table, th, td {
+    border: 1.5px solid rgb(230, 230, 230); /* 给表格和单元格添加边框 */
+  }
+  th, td {
+    text-align: center; /* 文本居中显示 */
+  }
+</style>
+
+<section >
+  <div class="container is-max-desktop">
+    <!-- Abstract. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <br>
+        <br>
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <p>
+            Recent advances in Text-to-Video generation (T2V) have achieved remarkable success
+            in synthesizing high-quality general videos from textual descriptions. A largely
+            overlooked problem in T2V is that existing models have not adequately encoded physical
+            knowledge of the real world, thus generated videos tend to have limited motion and poor
+            variations. In this paper, we propose MagicTime, a metamorphic time-lapse video
+            generation model, which learns real-world physics knowledge from time-lapse videos and
+            implements metamorphic generation. First, we design a MagicAdapter scheme to decouple
+            spatial and temporal training, encode more physical knowledge from metamorphic videos,
+            and transform pre-trained T2V models to generate metamorphic videos. Second, we introduce
+            a Dynamic Frames Extraction strategy to adapt to metamorphic time-lapse videos, which have
+            a wider variation range and cover dramatic object metamorphic processes, thus embodying more
+            physical knowledge than general videos. Finally, we introduce a Magic Text-Encoder to improve
+            the understanding of metamorphic video prompts. Furthermore, we create a time-lapse video-text
+            dataset called ChronoMagic, specifically curated to unlock the metamorphic video
+            generation ability. Extensive experiments demonstrate the superiority and effectiveness of
+            MagicTime for generating high-quality and dynamic metamorphic videos, suggesting time-lapse
+            video generation is a promising path toward building metamorphic simulators of the physical world.
+          </p>
+        </div>
+      </div>
+    </div>
+    <!--/ Abstract. -->
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Definition</h2>
+        <div class="content has-text-justified">
+        <p>
+          Compared to general videos, metamorphic videos contain physical knowledge, 
+          long persistence, and strong variation, making them difficult to generate. We show compressed 
+          .gif on github, which loses some quality. The general videos are generated by 
+          the <a href="https://github.com/guoyww/AnimateDiff">Animatediff</a> and <strong>MagicTime</strong>.
+        </p>
+        <table style="width:100%">
+          <tr>
+            <td class="text-cell" style="text-align:center;"><strong>Type</strong></td>  
+            <td class="text-cell" style="text-align:center;"><strong>"Bean sprouts grow and mature from seeds"</strong></td>
+            <td class="text-cell" style="text-align:center;"><strong>"[...] construction in a Minecraft virtual environment"</strong></td>
+            <td class="text-cell" style="text-align:center;"><strong>"Cupcakes baking in an oven [...]"</strong></td>
+            <td class="text-cell" style="text-align:center;"><strong>"[...] from a tightly closed bud to [...]"</strong></td>
+          </tr>
+          <tr>
+            <td class="text-cell" style="text-align:center;">General Videos</td>  
+            <td class="image-container" style="text-align:center;"><img src="static/videos/C_0_0.gif" alt="GeneralVideo"></td>
+            <td class="image-container" style="text-align:center;"><img src="static/videos/C_0_1.gif" alt="GeneralVideo"></td>
+            <td class="image-container" style="text-align:center;"><img src="static/videos/C_0_2.gif" alt="GeneralVideo"></td>
+            <td class="image-container" style="text-align:center;"><img src="static/videos/C_0_3.gif" alt="GeneralVideo"></td>
+          </tr>
+          <tr>
+            <td class="text-cell" style="text-align:center;">Metamorphic Videos</td>  
+            <td class="image-container" style="text-align:center;"><img src="static/videos/C_1_0.gif" alt="MetamorphicVideo"></td>
+            <td class="image-container" style="text-align:center;"><img src="static/videos/C_1_1.gif" alt="MetamorphicVideo"></td>
+            <td class="image-container" style="text-align:center;"><img src="static/videos/C_1_2.gif" alt="MetamorphicVideo"></td>
+            <td class="image-container" style="text-align:center;"><img src="static/videos/C_1_3.gif" alt="MetamorphicVideo"></td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <!-- Method. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Method</h2>
+        <img src="./static/images/Pipeline.png" alt="framework">
+        <div class="content has-text-justified">
+          <p>
+            <b>Overview of the proposed MagicTime approach.</b> We first train MagicAdapter-S to remove the influence
+            of watermarks. Next,  MagicAdapter-T is trained to generate metamorphic videos with the help of Dynamic Frames
+            Extraction. Finally, we train a Magic Text-Encoder to enhance text comprehension ability. During the
+            inference stage, all components need to be loaded simultaneously. Slash padding indicates the module is not used.
+          </p>
+        </div>
+      </div>
+    </div>
+    <!--/ Method. -->
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Gallery</h2>
+        <div class="content has-text-justified">
+          <p>
+            We showcase some metamorphic videos generated by <strong>MagicTime</strong>, <a href="https://github.com/xuduo35/MakeLongVideo">MakeLongVideo</a>, <a href="https://github.com/modelscope">ModelScopeT2V</a>, <a href="https://github.com/AILab-CVC/VideoCrafter?tab=readme-ov-file">VideoCrafter</a>, <a href="https://huggingface.co/cerspense/zeroscope_v2_576w">ZeroScope</a>, <a href="https://github.com/Vchitect/LaVie">LaVie</a>, <a href="https://github.com/Picsart-AI-Research/Text2Video-Zero">T2V-Zero</a>, <a href="https://github.com/Vchitect/Latte">Latte</a>, <a href="https://github.com/guoyww/AnimateDiff">Animatediff</a> below.
+          </p>
+          <table>
+            <tr>
+              <td colspan="1"><center>Method</center></td>  
+              <td colspan="1"><center>"cherry blossoms transitioning [...]"</center></td>
+              <td colspan="1"><center>"dough balls baking process [...]"</center></td>
+              <td colspan="1"><center>"an ice cube is melting [...]"</center></td>
+              <td colspan="1"><center>"a simple modern house's construction [...]"</center></td>
+            </tr>
+            <tr>
+              <td>MakeLongVideo</td>  
+              <td><img src="static/videos/A_0_0.gif" alt="MakeLongVideo"></td>
+              <td><img src="static/videos/A_0_1.gif" alt="MakeLongVideo"></td>
+              <td><img src="static/videos/A_0_2.gif" alt="MakeLongVideo"></td>
+              <td><img src="static/videos/A_0_3.gif" alt="MakeLongVideo"></td>
+            </tr>
+            <tr>
+              <td>ModelScopeT2V</td>  
+              <td><img src="static/videos/A_1_0.gif" alt="ModelScopeT2V"></td>
+              <td><img src="static/videos/A_1_1.gif" alt="ModelScopeT2V"></td>
+              <td><img src="static/videos/A_1_2.gif" alt="ModelScopeT2V"></td>
+              <td><img src="static/videos/A_1_3.gif" alt="ModelScopeT2V"></td>
+            </tr>
+            <tr>
+              <td>VideoCrafter</td>  
+              <td><img src="static/videos/A_2_0.gif" alt="VideoCrafter"></td>
+              <td><img src="static/videos/A_2_1.gif" alt="VideoCrafter"></td>
+              <td><img src="static/videos/A_2_2.gif" alt="VideoCrafter"></td>
+              <td><img src="static/videos/A_2_3.gif" alt="VideoCrafter"></td>
+            </tr>
+            <tr>
+              <td>ZeroScope</td>  
+              <td><img src="static/videos/A_3_0.gif" alt="ZeroScope"></td>
+              <td><img src="static/videos/A_3_1.gif" alt="ZeroScope"></td>
+              <td><img src="static/videos/A_3_2.gif" alt="ZeroScope"></td>
+              <td><img src="static/videos/A_3_3.gif" alt="ZeroScope"></td>
+            </tr>
+            <tr>
+              <td>LaVie</td>  
+              <td><img src="static/videos/A_4_0.gif" alt="LaVie"></td>
+              <td><img src="static/videos/A_4_1.gif" alt="LaVie"></td>
+              <td><img src="static/videos/A_4_2.gif" alt="LaVie"></td>
+              <td><img src="static/videos/A_4_3.gif" alt="LaVie"></td>
+            </tr>
+            <tr>
+              <td>T2V-Zero</td> 
+              <td><img src="static/videos/A_5_0.gif" alt="T2V-Zero"></td>
+              <td><img src="static/videos/A_5_1.gif" alt="T2V-Zero"></td>
+              <td><img src="static/videos/A_5_2.gif" alt="T2V-Zero"></td>
+              <td><img src="static/videos/A_5_3.gif" alt="T2V-Zero"></td>
+            </tr>
+            <tr>
+              <td>Latte</td>
+              <td><img src="static/videos/A_6_0.gif" alt="Latte"></td>
+              <td><img src="static/videos/A_6_1.gif" alt="Latte"></td>
+              <td><img src="static/videos/A_6_2.gif" alt="Latte"></td>
+              <td><img src="static/videos/A_6_3.gif" alt="Latte"></td>
+            </tr>
+            <tr>
+              <td>Animatediff</td>
+              <td><img src="static/videos/A_7_0.gif" alt="Animatediff"></td>
+              <td><img src="static/videos/A_7_1.gif" alt="Animatediff"></td>
+              <td><img src="static/videos/A_7_2.gif" alt="Animatediff"></td>
+              <td><img src="static/videos/A_7_3.gif" alt="Animatediff"></td>
+            </tr>
+            <tr>
+              <td>Ours</td>  
+              <td><img src="static/videos/A_8_0.gif" alt="Ours"></td>
+              <td><img src="static/videos/A_8_1.gif" alt="Ours"></td>
+              <td><img src="static/videos/A_8_2.gif" alt="Ours"></td>
+              <td><img src="static/videos/A_8_3.gif" alt="Ours"></td>
+            </tr>
+          </table>
+          <br>
+          <p>We show more metamorphic videos generated by <strong>MagicTime</strong> with the help of <a href="https://civitai.com/models/4201/realistic-vision-v20">Realistic</a>, <a href="https://civitai.com/models/30240/toonyou">ToonYou</a> and <a href="https://civitai.com/models/66347/rcnz-cartoon-3d">RcnzCartoon</a>.</p>
+          <table>
+            <tr>
+              <td><img src="static/videos/B_0_0.gif" alt="Realistic"></td>
+              <td><img src="static/videos/B_0_1.gif" alt="Realistic"></td>
+              <td><img src="static/videos/B_0_2.gif" alt="Realistic"></td>
+            </tr>
+            <tr>
+              <td colspan="1"><center>"[...] bean sprouts grow and mature from seeds"</center></td>
+              <td colspan="1"><center>"dough [...] swells and browns in the oven [...]"</center></td>
+              <td colspan="1"><center>"the construction [...] in Minecraft [...]"</center></td>
+            </tr>
+            <tr>
+              <td><img src="static/videos/B_1_0.gif" alt="RcnzCartoon"></td>
+              <td><img src="static/videos/B_1_1.gif" alt="RcnzCartoon"></td>
+              <td><img src="static/videos/B_1_2.gif" alt="RcnzCartoon"></td>
+            </tr>
+            <tr>
+              <td colspan="1"><center>"a bud transforms into a yellow flower"</center></td>
+              <td colspan="1"><center>"time-lapse of a plant germinating [...]"</center></td>
+              <td colspan="1"><center>"[...] a modern house being constructed in Minecraft [...]"</center></td>
+            </tr>
+            <tr>
+              <td><img src="static/videos/B_2_0.gif" alt="ToonYou"></td>
+              <td><img src="static/videos/B_2_1.gif" alt="ToonYou"></td>
+              <td><img src="static/videos/B_2_2.gif" alt="ToonYou"></td>
+            </tr>
+            <tr>
+              <td colspan="1"><center>"an ice cube is melting"</center></td>
+              <td colspan="1"><center>"bean plant sprouts grow and mature from the soil"</center></td>
+              <td colspan="1"><center>"time-lapse of delicate pink plum blossoms [...]"</center></td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Integrate into DiT-based Architecture</h2>
+        <div class="content has-text-justified">
+          <p>The mission of this project is to help reproduce Sora and provide high-quality video-text data and data annotation pipelines, to support <a href="https://github.com/PKU-YuanGroup/Open-Sora-Plan">Open-Sora-Plan</a> or other DiT-based T2V models. To this end, we take an initial step to integrate our MagicTime scheme into the DiT-based Framework. Specifically, our method supports the Open-Sora-Plan v1.0.0 for fine-tuning. We first scale up with additional metamorphic landscape time-lapse videos in the same annotation framework to get the ChronoMagic-Landscape dataset. Then, we fine-tune the Open-Sora-Plan v1.0.0 with the ChronoMagic-Landscape dataset to get the MagicTime-DiT model. The results are as follows (257×512×512 (10s)):</p>
+          <table>
+            <tr>
+              <td><img src="static/videos/D_0_0.gif" alt="OpenSora"></td>
+              <td><img src="static/videos/D_0_1.gif" alt="OpenSora"></td>
+              <td><img src="static/videos/D_0_2.gif" alt="OpenSora"></td>
+              <td><img src="static/videos/D_0_3.gif" alt="OpenSora"></td>
+            </tr>
+            <tr>
+              <td colspan="1"><center>"Time-lapse of a coastal landscape [...]"</center></td>
+              <td colspan="1"><center>"Display the serene beauty of twilight [...]"</center></td>
+              <td colspan="1"><center>"Sunrise Splendor: Capture the breathtaking moment [...]"</center></td>
+              <td colspan="1"><center>"Nightfall Elegance: Embrace the tranquil beauty [...]"</center></td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <h2 class="title is-3">Samples of ChronoMagic dataset</h2>
+          <div class="content has-text-justified">
+            <p>
+                In this work, we compiled a collection of time-lapse videos from the Internet to create a 
+                metamorphic video-text dataset containing 2,265 videos, named the ChronoMagic. We showcases samples from the dataset below. 
+                We plan to scale up the dataset to include additional categories and a larger number of videos in the future.
+            </p>
+            <table>
+              <tr>
+                <td>
+                    <video autoplay loop muted>
+                        <source src="static/videos/E_0_0.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </td>
+                <td>
+                  <video autoplay loop muted>
+                    <source src="static/videos/E_0_1.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                  </video>
+                </td>
+                <td>
+                  <video autoplay loop muted>
+                    <source src="static/videos/E_0_2.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                  </video>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <video autoplay loop muted>
+                    <source src="static/videos/E_1_0.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                  </video>
+                </td>
+                <td>
+                  <video autoplay loop muted>
+                    <source src="static/videos/E_1_1.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                  </video>
+                </td>
+                <td>
+                  <video autoplay loop muted>
+                    <source src="static/videos/E_1_2.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                  </video>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <video autoplay loop muted>
+                    <source src="static/videos/E_2_0.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                  </video>
+                </td>
+                <td>
+                  <video autoplay loop muted>
+                    <source src="static/videos/E_2_1.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                  </video>
+                </td>
+                <td>
+                  <video autoplay loop muted>
+                    <source src="static/videos/E_2_2.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                  </video>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <video autoplay loop muted>
+                    <source src="static/videos/E_3_0.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                  </video>
+                </td>
+                <td>
+                  <video autoplay loop muted>
+                    <source src="static/videos/E_3_1.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                  </video>
+                </td>
+                <td>
+                  <video autoplay loop muted>
+                    <source src="static/videos/E_3_2.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                  </video>
+                </td>
+              </tr>
+              <!-- Repeat for other rows -->
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+</section>
+
+
+
+
+<section class="section" id="BibTeX">
+  <div class="container is-max-desktop content">
+    <h2 class="title">BibTeX</h2>
+    <pre><code>@article{MagicTime,
+  author    = {Shenghai Yuan, Jinfa Huang, Yujun Shi, Yongqi Xu, Ruijie Zhu, Bin Lin, Xinhua Cheng, Li Yuan, Jiebo Luo},
+  title     = {MagicTime: Time-lapse Video Generation Models as Metamorphic Simulators},
+  journal   = {arxiv},
+  year      = {2024},
+}</code></pre>
+  </div>
+</section>
+
+
+<footer class="footer">
+  <div class="container">
+    <div class="content has-text-centered">
+      <a class="icon-link"
+         href="https://shyuanbest.github.io/">
+        <i class="fas fa-file-pdf"></i>
+      </a>
+      <a class="icon-link" href="https://shyuanbest.github.io/" class="external-link" disabled>
+        <i class="fab fa-github"></i>
+      </a>
+    </div>
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+          <p>
+            This website is constructed using the templet provided by <a
+                href="https://github.com/nerfies/nerfies.github.io">Nerfies</a>. Thanks for their effort.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
