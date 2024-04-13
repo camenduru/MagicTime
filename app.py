@@ -15,7 +15,6 @@ from transformers import CLIPTextModel, CLIPTokenizer
 from utils.unet import UNet3DConditionModel
 from utils.pipeline_magictime import MagicTimePipeline
 from utils.util import save_videos_grid, convert_ldm_unet_checkpoint, convert_ldm_clip_checkpoint, convert_ldm_vae_checkpoint, load_diffusers_lora_unet, convert_ldm_clip_text_model
-import spaces
 
 pretrained_model_path   = "./ckpts/Base_Model/stable-diffusion-v1-5"
 inference_config_path   = "./sample_configs/RealisticVision.yaml"
@@ -156,7 +155,6 @@ class MagicTimeController:
         assert len(unexpected) == 0
         return gr.Dropdown()
 
-    @spaces.GPU(duration=300)
     def magictime(
         self,
         dreambooth_dropdown,
@@ -277,4 +275,4 @@ def ui():
 if __name__ == "__main__":
     demo = ui()
     demo.queue(max_size=20)
-    demo.launch()
+    demo.launch(share=True)
